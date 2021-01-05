@@ -1,0 +1,28 @@
+<nav id="nav" class="local-nav" aria-label="category navigation">
+  <ul>
+    <li>
+      {% comment %}
+        Build current URL
+      {% endcomment %}
+      {% capture thisURL %}{{ site.baseurl }}/{{ page.parent }}/index.html{% endcapture %}
+      {% assign thisIteration = page.url | prepend: site.baseurl %}
+
+      <a href="{{ thisURL }}"{% if thisURL == thisIteration %} class="is-active is-current"{% endif %}>
+        Overview
+      </a>
+    </li>
+
+    {% comment %}
+      Page sections as ordered inherited from our config file _config.yml
+    {% endcomment %}
+    {% for page_section in page.children %}
+      {% capture thisURL %}{{ site.baseurl }}/{{ page.parent | slugify }}/{{ page_section.folder | slugify }}/index.html{% endcapture %}
+      {% assign thisIteration = page.url | prepend: site.baseurl %}
+      <li>
+        <a href="{{ thisURL }}"{% if thisURL == thisIteration %} class="is-active is-current"{% endif %}>
+          {{ page_section.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
